@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: cascading:cascading-core:3.0.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cascading/cascading-core/3.0.2/7a6a8052bf7a95055cfacb8e80707e2016108a85/cascading-core-3.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cascading/cascading-core/3.0.2/669fecfb7998ac8efae620468e4fe7d275abcd73/cascading-core-3.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

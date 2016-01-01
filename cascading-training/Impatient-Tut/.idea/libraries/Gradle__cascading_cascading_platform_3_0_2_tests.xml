@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: cascading:cascading-platform:3.0.2:tests">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cascading/cascading-platform/3.0.2/d59763e24395ef154f2596a998aaa30ef9631824/cascading-platform-3.0.2-tests.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cascading/cascading-platform/3.0.2/b632efef47a0722416e68e5984c55e6b7227302c/cascading-platform-3.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

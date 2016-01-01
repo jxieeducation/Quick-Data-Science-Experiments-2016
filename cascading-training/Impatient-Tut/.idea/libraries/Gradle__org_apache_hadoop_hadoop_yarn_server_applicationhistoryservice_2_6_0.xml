@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.hadoop:hadoop-yarn-server-applicationhistoryservice:2.6.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.hadoop/hadoop-yarn-server-applicationhistoryservice/2.6.0/1a1bc2114c4c2004c6a1841f897778ae77d2a065/hadoop-yarn-server-applicationhistoryservice-2.6.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.hadoop/hadoop-yarn-server-applicationhistoryservice/2.6.0/531eb98cab1f76398b9fe5c2fc0a8b97a3cd3d89/hadoop-yarn-server-applicationhistoryservice-2.6.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
