@@ -1,0 +1,150 @@
+# Cascading for the Impatient
+
+The Impatient series is a set of tutorials to get you started with
+http://cascading.org/[Cascading].
+
+This set of progressive coding examples starts with a simple file copy and
+builds up to a MapReduce implementation of the TF-IDF algorithm.
+
+Prerequisites
+-------------
+
+The code of this tutorial is hosted on
+https://github.com/Cascading/Impatient[github]. Please clone it onto your local
+disk like so:
+
+    $ git clone https://github.com/Cascading/Impatient
+
+Each part has its own sub-directory in the repository.
+
+In order to follow the tutorial, you will also have to have
+http://gradle.org[gradle] and http://hadoop.apache.org/[Apache Hadoop] installed
+on your computer. You do not need a hadoop cluster, local mode is sufficient.
+
+
+
+In the tutorials, we will also use *Driven* as an alternative to viewing the application 
+composition using the .dot file graphics. Driven is the application performance management 
+product designed to help developers accelerate Cascading application development and management. 
+Driven will give us additional visibility about our Cascading tutorial as we run it on the 
+cluster. If there's an issue, we can immediately identify where it happened and narrow 
+it down to the specific line of code.
+
+image:driven1.png[“Driven”,height=126]
+
+You do not need to make any changes to your existing Cascading applications to integrate 
+with the Driven application. To use Driven, the Driven Plugin must be on the runtime
+classpath for your Cascading application. 
+
+The cloud version of Driven is free for developer use. To get started using Driven, 
+visit http://docs.cascading.io/driven/2.0/#_getting_started[Getting Started with Driven] to access all the
+developer features and gain visibility into your Cascading applications (including apps 
+built with Scalding, Cascalog, Lingual, Pattern or any other Cascading dynamic programming language).
+
+[NOTE]
+===============================
+We will use the cloud-based Driven product for the purposes of this tutorial. Driven will 
+receive the data from your application to help you monitor and visualize the development 
+and the execution of your application. 
+
+To use Driven, the Driven plugin must be visible to your Cascading application. In addition, 
+your Cascading application must have network access to the Internet so it may send data 
+to the domain name "driven.cascading.io" over port 443 (the default SSL port for HTTP). Note 
+that the client side of Cascading will be the only Java process attempting to make a 
+remote network connection. Neither Cascading or the Plugin will open an connection from 
+within an Apache Hadoop cluster.
+
+You can learn more about using Driven for your Cascading application at 
+http://docs.cascading.io/driven/2.0/#_getting_started[Getting Started with Driven]
+
+===============================
+
+Gradle
+~~~~~~
+
+Everything has been tested with gradle 1.12. You can check your version of gradle
+
+    $ gradle -v
+    ------------------------------------------------------------
+    Gradle 1.12
+    ------------------------------------------------------------
+    ...
+
+Hadoop
+~~~~~~
+
+For hadoop please install the latest stable version from the 2.x series. At the
+time of this writing this means Apache hadoop 2.4.1.
+
+    $ hadoop version
+    Hadoop 2.4.1
+    ...
+
+Cascading is compatible with a number of hadoop distributions and versions. You
+can see on the http://www.cascading.org/support/compatibility/[compatibility
+page], if your distribution is supported.
+
+
+IDE support
+~~~~~~~~~~~
+
+While an IDE is not strictly required to follow the tutorials, it is certainly
+useful. You can easily create an http://www.jetbrains.com/idea/[IntelliJ IDEA]
+compatible project in each part of the tutorial like this:
+
+    $ gradle ideaModule
+
+If you prefer http://eclipse.org[eclipse], you can run:
+
+   gradle eclipse
+
+
+link:impatient1.html[Part 1]
+----------------------------
+- Implements simplest Cascading app possible
+- Copies each TSV line from source tap to sink tap
+- Roughly, in about a dozen lines of code
+- Physical plan: 1 Mapper
+
+
+link:impatient2.html[Part 2]
+----------------------------
+- Implements a simple example of WordCount
+- Uses a regex to split the input text lines into a token stream
+- Generates a DOT file, to show the Cascading flow graphically
+- Physical plan: 1 Mapper, 1 Reducer
+
+
+link:impatient3.html[Part 3]
+----------------------------
+- Uses a custom Function to scrub the token stream
+- Discusses when to use standard Operations vs. creating custom ones
+- Physical plan: 1 Mapper, 1 Reducer
+
+link:impatient4.html[Part 4]
+----------------------------
+- Shows how to use a HashJoin on two pipes
+- Filters a list of stop words out of the token stream
+- Physical plan: 1 Mapper, 1 Reducer
+
+link:impatient5.html[Part 5]
+----------------------------
+- Calculates the importance of a word in the document (TF-IDF) using an ExpressionFunction
+- Shows how to use a CountBy, SumBy, and a CoGroup
+- Physical plan: 10 Mappers, 8 Reducers
+
+link:impatient6.html[Part 6]
+----------------------------
+- Includes unit tests in the build
+- Shows how to use other TDD features: checkpoints, assertions, traps, debug
+- Physical plan: 11 Mappers, 8 Reducers
+
+
+Other versions
+--------------
+
+Also, compare these other excellent implementations of the example apps here:
+
+  * http://sujitpal.blogspot.de/2012/08/scalding-for-impatient.html[Scalding for the Impatient] by Sujit Pal in http://github.com/twitter/scalding[Scalding] and
+  * https://github.com/Cascading/Impatient-Cascalog[Cascalog for the Impatient] by Paul Lam in https://github.com/nathanmarz/cascalog[Cascalog].
+
