@@ -1,0 +1,4 @@
+vw iris_train --passes 100 -c -f iris.model.vw
+vw -i iris.model.vw -t iris_test -p iris.predictions
+
+
