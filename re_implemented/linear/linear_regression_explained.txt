@@ -1,0 +1,12 @@
+http://pingax.com/linear-regression-with-r-step-by-step-implementation-part-1/
+
+H(x) = ax + b
+cost(a, b) = avg(sum((y - H(x)) ^ 2)) <-- this is Mean Absolute Error
+gradient descent: 
+--> a = a - alpha * deriv(cost(a, b))
+
+partial derivative:
+b = b - alpha * avg(sum(y - H(x)))
+a = a - alpha * avg(sum(y - H(x)) * x) <-- by chain rule
+
+http://pingax.com/linear-regression-with-r-step-by-step-implementation-part-2/
