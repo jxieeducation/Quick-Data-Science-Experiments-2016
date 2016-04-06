@@ -1,0 +1,3 @@
+*.sess
+checkpoint
+MNIST_data/*
