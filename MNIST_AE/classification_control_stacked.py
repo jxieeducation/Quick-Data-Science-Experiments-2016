@@ -17,15 +17,8 @@ W_2 = tf.Variable(tf.random_normal(shape=[n_hidden_1, n_hidden_2], stddev=0.01),
 b_1 = tf.Variable(tf.zeros([n_hidden_1]), name='b_1')
 b_2 = tf.Variable(tf.zeros([n_hidden_2]), name='b_2')
 
-sess = tf.Session()
-saver = tf.train.Saver()
-saver.restore(sess,'stackedweights.sess')
-
 W_final_init = 1 / n_hidden_2
 W_final = tf.Variable(tf.random_uniform([n_hidden_2, 10], minval=-W_final_init, maxval=W_final_init))
-init = tf.initialize_variables([W_final])
-sess.run(init)
-
 
 def model(X, W_1, b_1, W_2, b_2, W_final, p_keep_input, p_keep_hidden):
 	X = tf.nn.dropout(X, p_keep_input)
@@ -42,6 +35,10 @@ cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(py_x, Y))
 train_op = tf.train.GradientDescentOptimizer(0.02).minimize(cost)
 predict_op = tf.argmax(py_x, 1)
 
+sess = tf.Session()
+init = tf.initialize_all_variables()
+sess.run(init)
+
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 trX, trY, teX, teY = mnist.train.images, mnist.train.labels, mnist.test.images, mnist.test.labels
 
@@ -50,3 +47,4 @@ for i in range(100):
         sess.run(train_op, feed_dict={X: trX[start:end], Y: trY[start:end]})
     print i, np.mean(np.argmax(teY, axis=1) ==
                      sess.run(predict_op, feed_dict={X: teX, Y: teY}))
+
