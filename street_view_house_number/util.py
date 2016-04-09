@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import random
 
 def show(img):
 	# is (3, 32, 32)
@@ -18,4 +19,9 @@ def reshapeToKeras2D(matrix):
 	fixed = np.swapaxes(temp2, 0, 1)
 	return fixed
 
+
+def showWrongOnes(X_matrix, y_true, y_pred, is_class, pred_class):
+    wrongImgs = X_matrix[np.logical_and(y_true == is_class, y_pred == pred_class)]
+    img = wrongImgs[int(random.random() * len(wrongImgs))]
+    show(img)
 
