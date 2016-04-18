@@ -1,0 +1,4 @@
+It's not working atm. Some potential places for issues:
+- no context window, maybe try like cntx of 5-10
+- remove stop words
+
