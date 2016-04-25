@@ -1,0 +1,16 @@
+Tutorial
+
+1. http://docs.chainer.org/en/stable/tutorial/basic.html
+2. http://docs.chainer.org/en/stable/tutorial/recurrentnet.html
+3. https://github.com/pfnet/chainer/tree/master/examples/ptb
+
+
+Project
+
+
+
+
+
+Slides
+
+
