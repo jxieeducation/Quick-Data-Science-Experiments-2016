@@ -131,7 +131,8 @@ accum_loss = 0
 batch_idxs = list(range(batchsize))
 print('going to train {} iterations'.format(jump * n_epoch))
 
-for i in six.moves.range(jump * n_epoch):
+# for i in six.moves.range(jump * n_epoch):
+for i in range(20000):
     x = chainer.Variable(xp.asarray(
         [train_data[(jump * j + i) % whole_len] for j in batch_idxs]))
     t = chainer.Variable(xp.asarray(
