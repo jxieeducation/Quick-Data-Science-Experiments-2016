@@ -5,8 +5,10 @@ Tutorial
 3. https://github.com/pfnet/chainer/tree/master/examples/ptb
 
 
-Project
+http://docs.chainer.org/en/stable/reference/functions.html?highlight=loss%20function
 
+Project
+https://github.com/odashi/chainer_examples/tree/master/chainer-1.5
 
 
 
