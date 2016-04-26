@@ -54,7 +54,7 @@ totalSize = trX.shape[0]
 batchSize = 100
 
 for epoch in range(20):
-	print('epoch: %d, loss: %f' % (epoch, model(teX, teY).data))
+	print('epoch: %d, loss: %f, accuracy: %f' % (epoch, model(teX, teY).data, model.accuracy.data))
 	indexes = np.random.permutation(totalSize)
 	for i in range(0, totalSize, batchSize):
 		x = Variable(trX[indexes[i : i + batchSize]])

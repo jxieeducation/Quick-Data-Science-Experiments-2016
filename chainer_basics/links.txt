@@ -7,6 +7,8 @@ Tutorial
 
 http://docs.chainer.org/en/stable/reference/functions.html?highlight=loss%20function
 
+https://gist.github.com/ktnyt/455694506ee6595c92e4
+
 Project
 https://github.com/odashi/chainer_examples/tree/master/chainer-1.5
 
