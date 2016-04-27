@@ -2,3 +2,4 @@
 *.pkl
 ptb/ptb.*
 ptb/*.bin
+cv/*
