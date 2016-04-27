@@ -1,11 +1,3 @@
-'''
-http://docs.chainer.org/en/stable/tutorial/recurrentnet.html
-https://github.com/pfnet/chainer/blob/master/examples/ptb/net.py
-https://github.com/karpathy/char-rnn
-https://github.com/yusuketomoto/chainer-char-rnn/blob/master/train.py
-http://karpathy.github.io/2015/05/21/rnn-effectiveness/
-'''
-
 ###### preprocessing data ######
 f = open('shakespeare.txt')
 raw = f.read().lower()
@@ -20,6 +12,8 @@ def char2Index(char):
 	return vocab.index(char)
 def index2Char(index):
 	return vocab[index]
+def sentence2listIndex(sentence):
+	return [char2Index(char) for char in sentence]
 def listIndex2Sentence(list_of_index):
 	return ''.join([index2Char(index) for index in list_of_index])
 
@@ -54,12 +48,15 @@ class RNN(Chain):
 		selected_var = Variable(np.array([selected], dtype=np.int32))
 		return selected_var
 
-	def generateSentence(self, start_index=14, length=40):
+	# come --> [14, 26, 24, 16]
+	def generateSentence(self, start_indexes=[14, 26, 24, 16], length=20):
 		self.reset_state()
-		# note index 14 is 'c'
-		starter = Variable(np.array([start_index], dtype=np.int32))
-		my_list_var = [starter]
-		curr = starter
+		my_list_var = []
+		curr = None
+		for index in start_indexes:
+			curr = Variable(np.array([index], dtype=np.int32))
+			my_list_var += [curr]
+			self.predict_char(curr)
 		for i in range(length):
 			predicted = self.predict_char(curr)
 			my_list_var += [predicted]
@@ -78,34 +75,39 @@ class Classifier(Chain):
 		self.accuracy = F.accuracy(y, t)
 		return self.loss
 
+def sentenceToChainerFormat(sentence):
+	# print sentence[:len(sentence)-1], sentence[1:]
+	x = sentence2listIndex(sentence[:len(sentence)-1])
+	y = sentence2listIndex(sentence[1:])
+	x_var_list = []
+	y_var_list = []
+	for index in x:
+		x_var_list += [Variable(np.array([index], dtype=np.int32))]
+	for index in y:
+		y_var_list += [Variable(np.array([index], dtype=np.int32))]
+	return x_var_list, y_var_list
+
 rnn = RNN()
 model = Classifier(rnn)
 optimizer = optimizers.SGD()
 optimizer.setup(model)
 
 totalSize = len(lines) / 100 * 100
-batchSize = 100 
+batchSize = 10
 
-def compute_loss(x_list):
-	loss = 0
-	for cur_word, next_word in zip(x_list, x_list[1:]):
-		# print cur_word, next_word
-		x = Variable(np.array([char2Index(cur_word)], dtype=np.int32))
-		y = Variable(np.array([char2Index(next_word)], dtype=np.int32))
-		loss += model(x, y)
-	return loss
-
-# dummy = Variable(np.array([1], dtype=np.int32))
 # print listIndex2Sentence(rnn.generateSentence())
-
 for epoch in range(20):
-	print('epoch: %d' % (epoch))
+	print('\n\nepoch: %d' % (epoch))
 	indexes = np.random.permutation(totalSize)
 	for i in range(0, totalSize, batchSize):
 		if i % 1000 == 0:
-			print 'at %d, generated: %s' % (i, listIndex2Sentence(rnn.generateSentence()))
+			print 'at %d, generated: %s' % (i, listIndex2Sentence(rnn.generateSentence(start_indexes=sentence2listIndex("you are"))))
 		for sentenceId in range(i, i + batchSize):
-			sentence = lines[sentenceId]
-			# print sentence
 			rnn.reset_state()
-			optimizer.update(compute_loss, sentence)
+			model.zerograds()
+			x_list, y_list = sentenceToChainerFormat(lines[sentenceId])
+			loss = 0
+			for i in range(len(x_list)):
+				loss += model(x_list[i], y_list[i])
+			loss.backward()
+			optimizer.update()
