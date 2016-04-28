@@ -18,12 +18,12 @@ def load_data(args):
     vocab = {}
     print ('%s/input.txt'% args.data_dir)
     words = codecs.open('%s/input.txt' % args.data_dir, 'rb', 'utf-8').read()
-    words = list(words)
+    words = list(words) # a list of characters
     dataset = np.ndarray((len(words),), dtype=np.int32)
     for i, word in enumerate(words):
         if word not in vocab:
             vocab[word] = len(vocab)
-        dataset[i] = vocab[word]
+        dataset[i] = vocab[word] # a list of shape (len(doc),), each entry is the dictionary index
     print 'corpus length:', len(words)
     print 'vocab size:', len(vocab)
     return dataset, words, vocab
