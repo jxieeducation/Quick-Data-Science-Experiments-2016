@@ -11,7 +11,7 @@ import codecs
 import numpy as np
 from chainer import cuda, Variable, FunctionSet, optimizers
 import chainer.functions as F
-from CharRNN import CharRNN, make_initial_state
+from CharRNN import CharRNN
 
 # input data
 def load_data(args):
@@ -76,13 +76,7 @@ jump         = whole_len / batchsize
 epoch        = 0
 start_at     = time.time()
 cur_at       = start_at
-state        = make_initial_state(n_units, batchsize=batchsize)
-if args.gpu >= 0:
-    accum_loss   = Variable(cuda.zeros(()))
-    for key, value in state.items():
-        value.data = cuda.to_gpu(value.data)
-else:
-    accum_loss   = Variable(np.zeros((), dtype=np.float32))
+accum_loss   = Variable(np.zeros((), dtype=np.float32))
 
 print 'going to train {} iterations'.format(jump * n_epochs)
 for i in xrange(jump * n_epochs):
@@ -95,7 +89,7 @@ for i in xrange(jump * n_epochs):
         x_batch = cuda.to_gpu(x_batch)
         y_batch = cuda.to_gpu(y_batch)
 
-    state, loss_i = model.forward_one_step(x_batch, y_batch, state, dropout_ratio=args.dropout)
+    loss_i = model.forward_one_step(x_batch, y_batch, dropout_ratio=args.dropout)
     accum_loss   += loss_i
 
     if (i + 1) % bprop_len == 0:  # Run truncated BPTT

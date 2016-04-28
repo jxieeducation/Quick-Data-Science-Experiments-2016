@@ -9,7 +9,7 @@ import codecs
 import numpy as np
 from chainer import cuda, Variable, FunctionSet
 import chainer.functions as F
-from CharRNN import CharRNN, make_initial_state
+from CharRNN import CharRNN
 
 sys.stdout = codecs.getwriter('utf_8')(sys.stdout)
 
@@ -37,17 +37,14 @@ for c, i in vocab.items():
 
 # load model
 model = pickle.load(open(args.model, 'rb'))
+# dont forget to reset the thingy =)
+model.l1.reset_state()
+model.l2.reset_state()
 n_units = model.embed.W.data.shape[1]
 
 if args.gpu >= 0:
     cuda.get_device(args.gpu).use()
     model.to_gpu()
-
-# initialize generator
-state = make_initial_state(n_units, batchsize=1, train=False)
-if args.gpu >= 0:
-    for key, value in state.items():
-        value.data = cuda.to_gpu(value.data)
 
 prev_char = np.array([0], dtype=np.int32)
 if args.gpu >= 0:
@@ -60,10 +57,10 @@ if len(args.primetext) > 0:
         if args.gpu >= 0:
             prev_char = cuda.to_gpu(prev_char)
 
-        state, prob = model.forward_one_step(prev_char, prev_char, state, train=False)
+        prob = model.forward_one_step(prev_char, prev_char, train=False)
 
 for i in xrange(args.length):
-    state, prob = model.forward_one_step(prev_char, prev_char, state, train=False)
+    prob = model.forward_one_step(prev_char, prev_char, train=False)
 
     if args.sample > 0:
         probability = cuda.to_cpu(prob.data)[0].astype(np.float64)
