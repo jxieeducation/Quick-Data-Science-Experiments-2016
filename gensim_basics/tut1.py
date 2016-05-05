@@ -25,12 +25,12 @@ from pprint import pprint
 # pprint(texts)
 
 dictionary = corpora.Dictionary(texts)
-dictionary.save('temp/deerwester.dict')
+# dictionary.save('temp/deerwester.dict')
 
 new_doc = "Human computer interaction"
 print dictionary.doc2bow(new_doc.lower().split())
 corpus = [dictionary.doc2bow(text) for text in texts]
-corpora.MmCorpus.serialize('temp/deerwester.mm', corpus)
+# corpora.MmCorpus.serialize('temp/deerwester.mm', corpus)
 
 class MyCorpus(object):
 	def __iter__(self):
@@ -40,7 +40,7 @@ corpus_memory_friendly = MyCorpus()
 print corpus_memory_friendly.__iter__().next()
 
 
-corpora.SvmLightCorpus.serialize('temp/corpus.svmlight', corpus)
-corpora.BleiCorpus.serialize('temp/corpus.lda-c', corpus)
-corpora.LowCorpus.serialize('temp/corpus.low', corpus)
+# corpora.SvmLightCorpus.serialize('temp/corpus.svmlight', corpus)
+# corpora.BleiCorpus.serialize('temp/corpus.lda-c', corpus)
+# corpora.LowCorpus.serialize('temp/corpus.low', corpus)
 
