@@ -51,7 +51,7 @@ def getWidth(loc):
 		approx = cv2.approxPolyDP(c, 0.1 * peri, True)
 		if len(approx) == 4:
 			tophalf = person_image.copy()
-			cv2.drawContours(tophalf, [approx], -1, (0, 255, 255), 3)
+			cv2.drawContours(tophalf, [approx], -1, (0, 255, 255), 2)
 			cv2.imshow("Game Boy Screen", tophalf)
 			cv2.waitKey(0)
 			break
