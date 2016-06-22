@@ -41,7 +41,7 @@ model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adadelta')
 model.fit(X_train, y_train, batch_size=batch_size, nb_epoch=nb_epoch,
-          show_accuracy=False, verbose=1, validation_data=(X_test, y_test))
+          show_accuracy=True, verbose=1, validation_data=(X_test, y_test))
 
 score = model.evaluate(X_test, y_test, show_accuracy=True, verbose=0)
 print('Test score:', score[0])
