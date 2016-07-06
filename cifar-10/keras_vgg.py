@@ -1,13 +1,17 @@
+''' THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 '''
+
 from keras.models import Sequential
 from keras.layers.core import Flatten, Dense, Dropout
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, ZeroPadding2D
-from keras.optimizers import SGD
+from keras.optimizers import SGD, RMSprop
 from skimage.transform import resize
 from skimage.io import imread
 from skimage import img_as_ubyte
 import numpy as np
 from skdata import cifar10
 from sklearn.cross_validation import train_test_split
+from keras.utils import np_utils
+
 
 def VGG_16(weights_path=None):
     model = Sequential()
@@ -63,13 +67,15 @@ if __name__ == "__main__":
     model = VGG_16('vgg16_weights.h5')
     model.layers.pop()
     model.add(Dense(10, activation='softmax'))
-    sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
-    model.compile(optimizer=sgd, loss='categorical_crossentropy')
+    # sgd = SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
+    rms = RMSprop()
+    model.compile(optimizer=rms, loss='categorical_crossentropy')
 
     c10 = cifar10.dataset.CIFAR10()
     c10.fetch(download_if_missing=True)
     labels = [m['label'] for m in c10.meta][:5000]
     y = c10._labels[:5000]
+    y = np_utils.to_categorical(y, 10)
     X = [] 
     # c10._pixels.shape[0]
     for i in range(5000): # (60000, 32, 32, 3)
