@@ -1,6 +1,5 @@
-''' THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 
-
-I got this: 0.792 acc
+''' 
+Adding image augmentation this time
 '''
 
 import sys
@@ -17,6 +16,7 @@ from skdata import cifar10
 from sklearn.cross_validation import train_test_split
 from keras.utils import np_utils
 from sklearn.metrics import accuracy_score
+from keras.preprocessing.image import ImageDataGenerator
 
 
 def VGG_16(weights_path=None):
@@ -117,9 +117,23 @@ if __name__ == "__main__":
     # X /= 255.0 # no...
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
 
-    model.fit(X_train, y_train, batch_size=32, nb_epoch=10, validation_data=(X_test, y_test))
+    datagen = ImageDataGenerator(
+        featurewise_center=False,  # set input mean to 0 over the dataset
+        samplewise_center=False,  # set each sample mean to 0
+        featurewise_std_normalization=False,  # divide inputs by std of the dataset
+        samplewise_std_normalization=False,  # divide each input by its std
+        zca_whitening=False,  # apply ZCA whitening
+        rotation_range=0,  # randomly rotate images in the range (degrees, 0 to 180)
+        width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
+        height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
+        horizontal_flip=True,  # randomly flip images
+        vertical_flip=False)  # randomly flip images
+    datagen.fit(X_train)
+    model.fit_generator(datagen.flow(X_train, y_train,
+                        batch_size=32),
+                        samples_per_epoch=X_train.shape[0],
+                        nb_epoch=20,
+                        validation_data=(X_test, y_test))
 
     out = model.predict(X_test)
     print accuracy_score(np.argmax(y_test, axis=1), np.argmax(out, axis=1))
-
-
