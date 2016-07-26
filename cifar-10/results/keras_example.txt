@@ -1,0 +1,9 @@
+Time test (in s/epoch):
+- batch 128, data_aug True, gpu 1070 --> 23
+- batch 128, data_aug True, i7 --> 294
+- batch 32, data_aug True, i5 --> 330
+- batch 256, 1070 --> 22
+- batch 1024, 1070 --> 21
+- batch 4096, 1070 --> 26
+
+
