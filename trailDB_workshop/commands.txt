@@ -1,0 +1,7 @@
+tdb make -i test.csv --csv-header -o mytest
+
+curl -O http://traildb.io/data/pydata-tutorial.tdb
+
+
+
+
