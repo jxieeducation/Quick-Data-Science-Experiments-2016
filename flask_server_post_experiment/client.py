@@ -6,15 +6,16 @@ import requests
 import pickle
 
 def sendme(data, master='0.0.0.0:5000'):
-    # headers = {'Content-Type': 'application/data'}
+    headers = {'Content-Type': 'application/data'}
     # headers['Content-Length'] = sys.getsizeof(data)
-    # print headers
-    # request = urllib2.Request('http://%s/ping' % master, data, headers=headers)
-    # return urllib2.urlopen(request).read()
-    f = open('/tmp/rand', 'wb')
-    pickle.dump(data, f)
-    with open('/tmp/rand', 'rb') as g:
-    	requests.post("http://"+master+"/ping", data=g)
+    print headers
+    request = urllib2.Request('http://%s/ping' % master, data, headers=headers)
+    return urllib2.urlopen(request).read()
+
+    # f = open('/tmp/rand', 'wb')
+    # pickle.dump(data, f)
+    # with open('/tmp/rand', 'rb') as g:
+    # 	requests.post("http://"+master+"/ping", data=g)
 
     # response = urllib2.urlopen(urllib2.Request('http://%s/ping' % master, data, {'Content-Length': sys.getsizeof(data)}))
 
