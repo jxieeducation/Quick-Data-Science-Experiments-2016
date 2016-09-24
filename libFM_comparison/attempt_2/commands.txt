@@ -1,0 +1,16 @@
+
+base command to format to vw: 
+awk -F"\t" '{printf "%d |u %d |i %d\n", $3,$1,$2}' 
+
+to train: 
+cat ml-100k/ua.base | awk -F"\t" '{printf "%d |u %d |i %d\n", $3,$1,$2}' | vw -b 18 -q ui --passes 20 --cache_file cache_normal -f normal.vw
+
+cat ml-100k/ua.base | awk -F"\t" '{printf "%d |u %d |i %d\n", $3,$1,$2}' | vw -b 18 -q ui --passes 20 --rank 10 --l2 0.001 --learning_rate 0.015 --decay_learning_rate 0.97 --power_t 0 --cache_file cache_fm -f fm.vw
+
+
+to test:
+cat ml-100k/ua.test | awk -F"\t" '{printf "%d |u %d |i %d\n", $3,$1,$2}' | vw -t -i fm.vw
+
+
+MSE normal: 0.9652 
+MSE FM: 0.9140
