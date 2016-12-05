@@ -1,5 +1,5 @@
 import numpy as np 
-from minisom import MiniSom
+from minisom import MiniSom  
 
 data = np.genfromtxt('isolet1+2+3+4.data', delimiter=',')
 
